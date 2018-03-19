@@ -1,8 +1,5 @@
-import numpy as np
 import pandas as pd
 from sklearn import tree
-from sklearn.externals.six import StringIO  
-import pydotplus
 from sklearn.ensemble import RandomForestClassifier
 
 
@@ -13,12 +10,7 @@ def cleanData(dataframe):
     dataframe['Embarked'] = dataframe['Embarked'].map({'C': 0, 'Q': 1, 'S': 2})
     return dataframe
 
-def createGraph(classifier, filename):
-    dot_data = StringIO()  
-    tree.export_graphviz(classifier, out_file=dot_data, feature_names=features)  
-    graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
-    graph.write_png('./'+ filename +'.png')
-    
+
 
 # ----- TRAINING -----
 trainingDF = pd.read_csv('./train.csv', header = 0)
@@ -28,10 +20,7 @@ features = list(trainingDF.columns[[2,4,5,6,7,9,11]])
 x = trainingDF[features]
 y = trainingDF['Survived']
 
-# ----- Draw Decision Tree -----
-# clf = tree.DecisionTreeClassifier()
-# clf = clf.fit(x,y)
-# createGraph(clf,'Titanic')
+
 
 
 # ----- Random Forest -----
